@@ -113,51 +113,60 @@ class Fib
     };
     pr
   }
-  sample_pingpong_pipe() {
+ sample_pingpong_pipe() {
       var BUFFER_NUM = 3;
-      var x10 = cown.create(U64Obj.create(1));
-      var x11 = cown.create(U64Obj.create(1));
-      var x12 = cown.create(U64Obj.create(1));
-      var x20 = cown.create(U64Obj.create(1));
-      var x21 = cown.create(U64Obj.create(1));
-      var x22 = cown.create(U64Obj.create(1));
-      var x30 = cown.create(U64Obj.create(1));
-      var x31 = cown.create(U64Obj.create(1));
-      var x32 = cown.create(U64Obj.create(1));
+      var x10 = cown.create(U64Obj.create(0));
+      var x11 = cown.create(U64Obj.create(0));
+      var x12 = cown.create(U64Obj.create(0));
+      var x20 = cown.create(U64Obj.create(0));
+      var x21 = cown.create(U64Obj.create(0));
+      var x22 = cown.create(U64Obj.create(0));
+      var x30 = cown.create(U64Obj.create(0));
+      var x31 = cown.create(U64Obj.create(0));
+      var x32 = cown.create(U64Obj.create(0));
       var i = 0;
       while(i<10) {
         var pingpong = i%BUFFER_NUM;
         if (pingpong == 0) {
           when(x10) {
-             Builtin.print1("task A={}\n", i);
+             x10.v = x10.v+1;
+             Builtin.print2("task A{}, x10 = {}\n", i, x10.v);
           };
           when(x10, x20) {
-                Builtin.print1("task B={}\n", i);
+                x20.v = x10.v;
+                Builtin.print2("task B{}, x20 = {}\n", i, x20.v);
           };
           when(x20, x30) {
-             Builtin.print1("task C={}\n", i);
+             x30.v = x20.v;
+             Builtin.print2("task C{}, x30 = {}\n", i, x30.v);
           };
         };
         if (pingpong == 1) {
           when(x11) {
-             Builtin.print1("task A={}\n", i);
+             x11.v = x11.v+1;
+             Builtin.print2("task A{}, x11 = {}\n", i, x11.v);
           };
           when(x11, x21) {
-                Builtin.print1("task B={}\n", i);
+                x21.v = x11.v;
+                Builtin.print2("task B{}, x21 = {}\n", i, x21.v);
           };
           when(x21, x31) {
-             Builtin.print1("task C={}\n", i);
+             x31.v = x21.v;
+             Builtin.print2("task C{}, x31 = {}\n", i, x31.v);
           };
         };
         if (pingpong == 2) {
           when(x12) {
-             Builtin.print1("task A={}\n", i);
+             x12.v = x12.v+1;
+             Builtin.print2("task A{}, x12 = {}\n", i, x12.v);
           };
           when(x12, x22) {
-                Builtin.print1("task B={}\n", i);
+                x22.v = x12.v;
+                Builtin.print2("task B{}, x21 = {}\n", i, x22.v);
           };
           when(x22, x32) {
-             Builtin.print1("task C={}\n", i);
+             x32.v = x22.v;
+             Builtin.print2("task C{}, x32 = {}\n", i, x32.v);
           };
         };
         i=i+1;
